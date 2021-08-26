@@ -12,7 +12,7 @@ const request = require("request");
 
 const fetchMyIP = function(callback) {
   // use request to fetch IP address from JSON API
-  request("https://geo.ipify.org/api/v1?apiKey=at_eM7MdGpmVulGYrWIzYHXKlMsH2jXB&ipAddress=142.122.102.205", (error,response,body) => {
+  request("https://api.ipify.org?format=json", (error,response,body) => {
     if (error) {
       callback(error, null);
       return;
@@ -82,19 +82,18 @@ const nextISSTimesForMyLocation = function(callback) {
     }
   
   
-    fetchCoordsByIP("142.122.102.205",(error, coordinates) => {
+    fetchCoordsByIP(ip,(error, loc) => {
       if(error) {
         return callback(error, null)
       } 
+   
   
-  
-  
-      fetchISSFlyOverTimes(exampleCoords, (error, passTimes) => {
+      fetchISSFlyOverTimes(loc, (error, nextPasses) => {
         if (error) {
           return callback(error, null)
         }
   
-       callback(null, passTimes)
+       callback(null, nextPasses)
       });
     });
   });
